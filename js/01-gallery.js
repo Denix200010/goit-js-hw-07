@@ -18,5 +18,25 @@ function makeCards() {
     }).join('')
 }
 const cards = makeCards();
-const readyCards = containerRef.innerHTML = cards;
+containerRef.innerHTML = cards;
+
+containerRef.addEventListener('click', onImgClick);
+
+function onImgClick(e) {
+  e.preventDefault();
+
+  if (e.target.nodeName !== 'IMG') {
+    return;
+  }
+  
+    const instance = basicLightbox.create(`
+    <img src="${e.target.dataset.source}" width="800" height="600">`)
+  instance.show();
+  
+  containerRef.addEventListener('keydown',(e) => {
+    if (e.code === "Escape") {
+      instance.close();
+    }
+  })
+}
 
